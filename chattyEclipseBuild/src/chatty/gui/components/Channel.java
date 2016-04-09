@@ -71,7 +71,7 @@ public class Channel extends JPanel {
         this.type = type;
         
         // Text Pane
-        text = new ChannelTextPane(main,styleManager);
+        text = new ChannelTextPane(main,styleManager,false,false); //creates the channel last var false starts adding at top however new msgs are bottom
         text.setContextMenuListener(contextMenuListener);
         
         
@@ -110,7 +110,7 @@ public class Channel extends JPanel {
 
         // Add components
         add(mainPane, BorderLayout.CENTER);
-        add(input, BorderLayout.SOUTH);
+        add(input, BorderLayout.SOUTH); //changing this to north will put the text input on top
 
         input.requestFocusInWindow();
         setStyles();

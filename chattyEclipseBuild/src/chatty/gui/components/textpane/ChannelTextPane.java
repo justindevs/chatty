@@ -140,6 +140,9 @@ public class ChannelTextPane extends JTextPane implements LinkListener, Emoticon
     
     private final javax.swing.Timer updateTimer;
     
+    //justin add
+    private boolean reverseText = true;
+    
     public ChannelTextPane(MainGui main, StyleServer styleServer) {
         this(main, styleServer, false, true);
     }
@@ -157,13 +160,17 @@ public class ChannelTextPane extends JTextPane implements LinkListener, Emoticon
         scrollManager = new ScrollManager();
         this.addMouseListener(scrollManager);
         this.addMouseMotionListener(scrollManager);
-        setEditorKit(new MyEditorKit(startAtBottom));
+        setEditorKit(new MyEditorKit(startAtBottom)); //this reverses the text !!!!!!!!!!!!!! false = top
         this.setDocument(new MyDocument());
         doc = getStyledDocument();
         setEditable(false);
         DefaultCaret caret = (DefaultCaret)getCaret();
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         styles.setStyles();
+        
+        if(startAtBottom){
+        	reverseText = false;
+        }
         
         if (special) {
             updateTimer = new javax.swing.Timer(2000, new ActionListener() {
@@ -253,7 +260,7 @@ public class ChannelTextPane extends JTextPane implements LinkListener, Emoticon
         if (!highlighted && action && styles.actionColored()) {
             style = styles.standard(user.getDisplayColor());
         }
-        printSpecials(text, user, style, emotes);
+        printSpecials(text, user, style, emotes); //prints to the pane
         printNewline();
     }
     
@@ -1352,7 +1359,11 @@ public class ChannelTextPane extends JTextPane implements LinkListener, Emoticon
      */
     protected void printNewline() {
         newlineRequired = true;
+        if(reverseText){
         lineSelection.onLineAdded(getLastLine(doc));
+        } else {
+        	lineSelection.onLineAdded(getLastLine(doc));
+        }
 //        try {
 //            getHighlighter().addHighlight(doc.getLength(), doc.getLength(), painter);
 //        } catch (BadLocationException ex) {
@@ -1700,17 +1711,29 @@ public class ChannelTextPane extends JTextPane implements LinkListener, Emoticon
             if (doc.getLength() == 0 || newlineRequired) {
                 style.addAttribute(Attribute.TIMESTAMP, System.currentTimeMillis());
             }
+            
+
             if (newlineRequired) {
                 newline = "\n";
                 newlineRequired = false;
                 clearSomeChat();
             }
+
+            /*This is where text is reversed
+             * @author Justin Gottschalk
+             */
+            if(reverseText){
+            doc.insertString(0, newline+text, style);
+            doc.setParagraphAttributes(0, 1, styles.paragraph(), true);
+            } else {
             //System.out.println("1:"+doc.getLength());
             doc.insertString(doc.getLength(), newline+text, style);
             //System.out.println("2:"+doc.getLength());
             //this.getHighlighter().addHighlight(doc.getLength(), 10, null);
             // TODO: check how this works
             doc.setParagraphAttributes(doc.getLength(), 1, styles.paragraph(), true);
+            }
+            
             scrollDownIfNecessary();
         } catch (BadLocationException e) {
             System.err.println("BadLocationException");

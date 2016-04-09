@@ -45,7 +45,7 @@ class MyEditorKit extends StyledEditorKit {
                 } else if (kind.equals(AbstractDocument.ParagraphElementName)) {
                     return new MyParagraphView(elem);
                 } else if (kind.equals(AbstractDocument.SectionElementName)) {
-                    return new ChatBoxView(elem, View.Y_AXIS, startAtBottom);
+                    return new ChatBoxView(elem, View.Y_AXIS, false);
                 } else if (kind.equals(StyleConstants.ComponentElementName)) {
                     return new ComponentView(elem);
                 } else if (kind.equals(StyleConstants.IconElementName)) {

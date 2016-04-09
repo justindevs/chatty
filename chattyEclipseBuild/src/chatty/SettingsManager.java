@@ -190,6 +190,7 @@ public class SettingsManager {
         settings.addLong("dialogFontSize", -1);
         
         settings.addBoolean("imageCache", true);
+
         
         // Colors
         settings.addString("foregroundColor","#111111");
@@ -272,6 +273,9 @@ public class SettingsManager {
         settings.addBoolean("chatScrollbarAlways", false);
         settings.addLong("userlistWidth", 120);
         settings.addLong("userlistMinWidth", 0);
+        
+        /* justin edit */
+		settings.addBoolean("reverseChannel", false);
         
         // Highlight
         settings.addList("highlight",new ArrayList(), Setting.STRING);

@@ -73,7 +73,12 @@ public class WindowSettings extends SettingsPanel {
         other.add(d.addSimpleLongSetting("userlistMinWidth", 3, true),
                 d.makeGbc(3, 4, 1, 1, GridBagConstraints.WEST));
         
-        
+        /*JUSTIN ADD CHECKBOX TO GUI */
+        other.add(d.addSimpleBooleanSetting("reverseChannel",
+        		"New messages in the channel windows appear at the top." ,
+        		"Reverse new entries in channel window."),
+        		d.makeGbc(4,4,1,1,GridBagConstraints.WEST));
+
         JPanel popout = addTitledPanel("Popout", 2);
         
         popout.add(d.addSimpleBooleanSetting("popoutSaveAttributes", "Restore location/size",
