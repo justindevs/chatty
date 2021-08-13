@@ -1,4 +1,4 @@
-Chatty
+Chatty-updated
 ======
 
 Chatty is a Twitch Chat Client for Desktop written in Java featuring many
